@@ -1,0 +1,49 @@
+service: chainioEndToEnd
+frameworkVersion: ">=1.18.0"
+custom:
+  dev:
+    SNS_ENDPOINT: 'arn:aws:sns:us-east-1:FAKE:FAKE'
+    API_KEY: 'FAKE'
+    API_URL: 'dev-api.chain.io'
+    SAMPLE_UUID: 'a33c21a1-b03a-4e86-9977-c054de14c586'
+    run_scheduler: false
+  production:
+    SNS_ENDPOINT: 'arn:aws:sns:us-east-1:FAKE:FAKE'
+    API_KEY: 'FAKE'
+    API_URL: 'api.chain.io'
+    SAMPLE_UUID: '82fbe9ff-ddba-4a07-a58b-719a5071a1c3'
+    run_scheduler: true
+
+provider:
+  name: 'aws'
+  runtime: 'nodejs6.10'
+  region: 'us-east-1'
+  timeout: 180
+  cfnRole: arn:aws:iam::FAKE:role/deploy_from_cloudformation
+  deploymentBucket:
+    name: chainio-serverless-deployments-useast
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "sns:Publish"
+      Resource: '${self:custom.${opt:stage}.SNS_ENDPOINT}'
+  environment:
+    SNS_ENDPOINT: '${self:custom.${opt:stage}.SNS_ENDPOINT}'
+    API_KEY: '${self:custom.${opt:stage}.API_KEY}'
+    API_URL: '${self:custom.${opt:stage}.API_URL}'
+    SAMPLE_UUID: '${self:custom.${opt:stage}.SAMPLE_UUID}'
+    CHAINIO_ENV: '${opt:stage}'
+
+package:
+  include:
+    - ../node_modules/**
+    - ../postman/**
+
+functions:
+  runner:
+    handler: runner.handler
+    memorySize: 384
+    events:
+      - schedule:
+          rate: rate(30 minutes)
+          enabled: ${self:custom.${opt:stage}.run_scheduler}

@@ -1,0 +1,124 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Chain.io API Tests",
+		"_postman_id": "efa696b5-61e7-0e3e-387e-f0ccc5928118",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Write",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Write Node - Properties\"] = jsonData.results[0].node.properties.customer_order_number === \"SampleOrder1\";",
+							"tests[\"Write Node - Batch\"] = jsonData.metadata.batch.nodes_saved === 1;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://{{url}}/write",
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{api-key}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n        \"properties\": {\n          \"customer_order_number\": \"SampleOrder1\",\n          \"seller_order_number\": \"SampleSupOrder1\",\n          \"order_date\": 1497032746382,\n          \"created_at\": 1497272791065,\n          \"updated_at\": 1497272791065\n        },\n        \"type\": \"purchase_order\"\n\t}\n]"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Read Node",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Read Node - Properties\"] = jsonData.node.properties.customer_order_number === \"SampleOrder1\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://{{url}}/nodes/{{sample-uuid}}",
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{api-key}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n{\n  \"type\": \"purchase_order\",\n  \"properties\": {\n    \"customer_order_number\": \"ApiKeyTest\",\n    \"seller_order_number\": \"SampleSupOrder1\",\n    \"order_date\": 1497032746382\n  }\n},\n{\n  \"type\": \"purchase_order_line\",\n  \"properties\": {\n    \"line_id\": \"1\",\n    \"customer_sku\": \"SPS1B\",\n    \"sku_description\": \"Smart Pooper Scooper - Blue\",\n    \"quantity_requested\": 50000,\n    \"minimum_quantity\": 49500,\n    \"maximum_quantity\": 50500,\n    \"unit_of_measure\": \"EA\",\n    \"unit_of_measure_description\": \"Each\",\n    \"unit_price\": 12.97,\n    \"extended_price\": 648500,\n    \"product_name\": \"Smart Pooper Skuper\",\n    \"customer_product_id\": \"SPS1\",\n    \"earliest_delivery_date\": 1497032746382,\n    \"latest_delivery_date\": 1497032746382,\n    \"ship_to_address\": \"Distribution Center 1908\\n1060 W Addison St\\nSuite 100\\nChicago, IL 60613\\nUS\"\n  },\n  \"parents\": [\n    { \"type\": \"purchase_order-purchase_order_line\", \"uuid\": \"$0\" }\n  ]\n},\n{\n  \"type\": \"purchase_order_line\",\n  \"properties\": {\n    \"line_id\": \"2\",\n    \"customer_sku\": \"SPS1B\",\n    \"sku_description\": \"Smart Pooper Scooper - Blue\",\n    \"quantity_requested\": 50000,\n    \"minimum_quantity\": 49500,\n    \"maximum_quantity\": 50500,\n    \"unit_of_measure\": \"EA\",\n    \"unit_of_measure_description\": \"Each\",\n    \"unit_price\": 12.97,\n    \"extended_price\": 648500,\n    \"product_name\": \"Smart Pooper Skuper\",\n    \"customer_product_id\": \"SPS1\",\n    \"earliest_delivery_date\": 1497032746382,\n    \"latest_delivery_date\": 1497032746382,\n    \"ship_to_address\": \"Distribution Center 1908\\n1060 W Addison St\\nSuite 100\\nChicago, IL 60613\\nUS\"\n  },\n  \"parents\": [\n    { \"type\": \"purchase_order-purchase_order_line\", \"uuid\": \"$0\" }\n  ]\n},\n{\n  \"type\": \"purchase_order_line\",\n  \"properties\": {\n    \"line_id\": \"3\",\n    \"customer_sku\": \"SPS1B\",\n    \"sku_description\": \"Smart Pooper Scooper - Blue\",\n    \"quantity_requested\": 50000,\n    \"minimum_quantity\": 49500,\n    \"maximum_quantity\": 50500,\n    \"unit_of_measure\": \"EA\",\n    \"unit_of_measure_description\": \"Each\",\n    \"unit_price\": 12.97,\n    \"extended_price\": 648500,\n    \"product_name\": \"Smart Pooper Skuper\",\n    \"customer_product_id\": \"SPS1\",\n    \"earliest_delivery_date\": 1497032746382,\n    \"latest_delivery_date\": 1497032746382,\n    \"ship_to_address\": \"Distribution Center 1908\\n1060 W Addison St\\nSuite 100\\nChicago, IL 60613\\nUS\"\n  },\n  \"parents\": [\n    { \"type\": \"purchase_order-purchase_order_line\", \"uuid\": \"$0\" }\n  ]\n},\n{\n  \"type\": \"purchase_order_line\",\n  \"properties\": {\n    \"line_id\": \"4\",\n    \"customer_sku\": \"SPS1B\",\n    \"sku_description\": \"Smart Pooper Scooper - Blue\",\n    \"quantity_requested\": 50000,\n    \"minimum_quantity\": 49500,\n    \"maximum_quantity\": 50500,\n    \"unit_of_measure\": \"EA\",\n    \"unit_of_measure_description\": \"Each\",\n    \"unit_price\": 12.97,\n    \"extended_price\": 648500,\n    \"product_name\": \"Smart Pooper Skuper\",\n    \"customer_product_id\": \"SPS1\",\n    \"earliest_delivery_date\": 1497032746382,\n    \"latest_delivery_date\": 1497032746382,\n    \"ship_to_address\": \"Distribution Center 1908\\n1060 W Addison St\\nSuite 100\\nChicago, IL 60613\\nUS\"\n  },\n  \"parents\": [\n    { \"type\": \"purchase_order-purchase_order_line\", \"uuid\": \"$0\" }\n  ]\n}\n]"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Query",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Query By UUID - Properties\"] = jsonData.results[0].node.properties.customer_order_number === \"SampleOrder1\";",
+							"tests[\"Query by UUID - Batch\"] = jsonData.metadata.batch.nodes_read === 1;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://{{url}}/query",
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{api-key}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"purchase_order\",\n\t\"where\": { \"uuid\": \"{{sample-uuid}}\" }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

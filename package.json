@@ -1,0 +1,18 @@
+{
+  "name": "chainio-end-to-end",
+  "version": "1.0.0",
+  "description": "End To End Testing Automation",
+  "main": "index.js",
+  "repository": "git@github.com:mbsctech/chainio-end-to-end.git",
+  "author": "Chain.io",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "newman": "^3.7.6"
+  },
+  "scripts": {
+    "deploy": "if [ -z ${CHAINIO_ENV+x} ]; then echo \"CHAINIO_ENV is not set\"; else yarn install --prod && cd ./serverless && sls deploy -s $CHAINIO_ENV && cd .. && yarn install ; fi"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.86.0"
+  }
+}
